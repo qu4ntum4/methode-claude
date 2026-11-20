@@ -5,7 +5,7 @@ disable-model-invocation: true
 argument-hint: "[dossier du projet]"
 ---
 
-Mettre en route le projet « $ARGUMENTS » (sans argument : le dossier courant). Version du 18/10/2026.
+Mettre en route le projet « $ARGUMENTS » (sans argument : le dossier courant). Version du 20/11/2026.
 
 1. **Regarder ce qui existe** dans le dossier : du code, des documents, un `.git`, un ancien
    TODO ou journal. Ne rien écraser : les gabarits ne s'écrivent que là où rien n'existe.
@@ -24,6 +24,12 @@ Mettre en route le projet « $ARGUMENTS » (sans argument : le dossier courant).
    de cette session en « Session principale », l'objectif, « Fini quand », une première
    action), `TODO.md`. Pas une ligne inventée : ce qu'on ne sait
    pas reste une question dans `ETAT.md`, « Ce qui attend une réponse ».
+   **Avant d'écrire ce titre** : si les règles globales fixent une forme pour le titre d'une
+   session principale et que cette session est ouverte dans le dossier du projet, la renommer à
+   cette forme (`ToolSearch` « select:mcp__ccd_session_mgmt__set_session_title », puis
+   `set_session_title` avec `self`), avec le nom court que l'utilisateur a donné, à défaut celui
+   du dossier ; le dire dans le compte rendu. Ouverte ailleurs, ou sans l'outil, ne pas la
+   renommer : le premier point d'étape de la session du projet le proposera.
 5. **S'il existe une conversation-fleuve sur ce projet**, le dire : elle doit faire un dernier
    point d'étape complet avant d'être close, et c'est l'utilisateur qui le lui demande.
 6. **Si des données sensibles existent** : compléter `.gitignore` avant tout commit, et chercher

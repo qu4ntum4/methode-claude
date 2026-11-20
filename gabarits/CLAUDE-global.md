@@ -69,6 +69,11 @@ projet n'y vit.
   Après `/clear`, `/reprendre` demande d'abord qui il est et reprend là, jamais sur la prochaine
   action de la principale. La ligne envoyée à la principale est complète et se colle telle quelle
   sous « Des sessions », à son point d'étape, pas en pleine tâche.
+- **La session principale d'un projet s'appelle `*** MAIN - <PROJET>`** : le nom court du projet
+  en majuscules, celui que l'utilisateur donne, à défaut celui du dossier, ses tirets rendus en
+  espaces. C'est pour son œil dans la liste des sessions : `/reprendre` reconnaît la principale
+  à la ligne « Session principale » d'`ETAT.md`, jamais à la forme du titre. `/nouveau-projet`
+  pose ce titre, `/checkpoint` le propose quand il manque.
 
 **Les conversations passées : mémoire de dernier recours, sur demande seulement.** Toutes sont
 conservées (`cleanupPeriodDays` à 3 650 jours) et archivées en texte lisible dans

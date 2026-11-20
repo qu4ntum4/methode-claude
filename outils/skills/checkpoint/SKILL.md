@@ -49,6 +49,13 @@ l'autre.
    fichier, relevé auprès de l'application (`get_session` avec `self`), jamais recopié de
    l'ancien état : c'est à ce titre que `/reprendre` reconnaît la principale. La poser si elle
    manque (états d'avant le 20/11).
+   Si les règles globales fixent une forme pour le titre d'une session principale et que ce
+   titre ne l'a pas : avant d'écrire la ligne, proposer le renommage par une question
+   (`AskUserQuestion` : le titre à la forme, avec le nom court que le titre porte déjà, sinon
+   celui du dossier ; ou garder le titre actuel). Sur un oui, renommer (`ToolSearch`
+   « select:mcp__ccd_session_mgmt__set_session_title », puis `set_session_title` avec `self`)
+   et écrire le nouveau titre dans la ligne ; sans l'outil, demander à l'utilisateur de la
+   renommer lui-même. Une session annexe ne se renomme pas ainsi.
    Aucun nom de personne si le fichier est versionné.
 7. **Le reste à faire.** Retirer des chantiers ce qui est fait ; ajouter ce que l'utilisateur a
    validé, **avec sa priorité** (`[P1]`-`[P3]` en tête de tâche, obligatoire dans `divers.md`) ;

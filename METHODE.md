@@ -297,6 +297,12 @@ principale, qui l'attendait encore. Les règles qui en sont sorties :
   ne suffit pas : une principale lancée depuis une autre session y est une enfant, et le reste
   même détachée. Vu le 20/11 : une principale se lisait comme une annexe, et ne savait qui elle
   était que par sa consigne de départ.
+- **La session principale porte un titre convenu**, le même d'un projet à l'autre — une marque
+  fixe en tête, puis le nom court du projet ; la forme est dans les règles globales. C'est pour
+  l'œil de l'utilisateur, qui la retrouve d'un regard parmi vingt sessions ; l'agent, lui, ne
+  s'y fie pas et lit la ligne de l'état. `/nouveau-projet` pose ce titre, `/checkpoint` propose
+  le renommage quand il manque, et l'état reçoit le nouveau titre dans le même passage. Vu le
+  20/11 : cinq sessions principales, deux formes de titre, et des projets sans aucune.
 - **La ligne envoyée à la principale est complète** (chantier, commit, prochaine action) et se
   colle telle quelle sous « Des sessions » de l'état, au point d'étape de la principale — pas en
   pleine tâche, une autre session peut relire l'état à cet instant.
