@@ -321,7 +321,8 @@ dépôts obligerait à recopier les données de l'un dans l'autre. On garde donc
 Trois scripts en Python, pour tourner tels quels sous Windows, inactifs dans tout dossier sans
 `ETAT.md`, et incapables de bloquer une session (code de sortie 0 quoi qu'il arrive ; le seul
 « blocage » est celui d'une fin de tour, une fois, le temps d'une phrase). Leur source est dans
-`outils/hooks/` ; `outils/installer.py` les branche.
+`outils/hooks/` ; `outils/installer.py` les branche, sans toucher aux automatismes que d'autres
+outils ont posés dans les mêmes réglages.
 
 | Quand | Quoi | Pourquoi |
 |---|---|---|

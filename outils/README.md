@@ -31,6 +31,10 @@ Les scripts sont en Python pour tourner tels quels sous Windows ; ils ne bloquen
 session (code de sortie 0 quoi qu'il arrive). `installer.py` écrit dans `settings.json` les
 chemins de cette machine (`python.exe`, ce dossier) et le seuil de la compaction d'absence
 (`CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS`, 300 000) : sur une autre machine, le relancer suffit.
+Il ne touche qu'aux automatismes de la méthode, qu'il reconnaît à leur script : ceux que d'autres
+outils ont posés dans `settings.json` restent à leur place, et `--verifier` ne répond que sur
+les siens. Une copie des réglages est prise avant chaque écriture
+(`settings.json.avant-derniere-installation`), en plus de celle de la toute première fois.
 
 ## Publier la méthode — le dépôt public
 

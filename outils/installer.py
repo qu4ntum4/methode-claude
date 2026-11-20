@@ -9,10 +9,14 @@ Installe la méthode dans Claude Code. Ce dossier est la SOURCE ; ~/.claude reç
 Ce qui est fait :
   - les commandes de outils/skills/ sont copiées dans ~/.claude/skills/ (Claude Code ne lit que
     là) ; /nouveau-projet reçoit aussi une copie de gabarits/ ;
-  - ~/.claude/settings.json est complété : les automatismes pointent directement sur
-    outils/hooks/ de ce dossier (pas de copie), cleanupPeriodDays est posé, ainsi que le seuil
-    de la compaction d'absence (env CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS, 08/11). Une sauvegarde
-    settings.json.avant-installation est prise la première fois. Les autres clés sont gardées ;
+  - ~/.claude/settings.json est complété : les automatismes de la méthode pointent directement
+    sur outils/hooks/ de ce dossier (pas de copie). L'installeur reconnaît les siens à leur
+    script, remplace ceux-là et laisse à leur place ceux que d'autres outils ont posés ;
+    --verifier ne répond que sur les siens (20/11). cleanupPeriodDays est posé, ainsi que le
+    seuil de la compaction d'absence (env CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS, 08/11). Une
+    sauvegarde settings.json.avant-installation est prise la première fois, et
+    settings.json.avant-derniere-installation avant chaque écriture (20/11). Les autres clés
+    sont gardées ;
   - les automatismes du capteur des sessions (hooks/signaler_sessions.py, chantier tableau-claude)
     ne sont posés que si ce script est là : il ne fait pas partie de la méthode publiée (11/11) ;
   - ~/.claude/CLAUDE.md, les règles valables dans tous les projets, est posé depuis
@@ -24,6 +28,7 @@ Ce qui est fait :
 import filecmp
 import json
 import os
+import re
 import shutil
 import sys
 
@@ -78,6 +83,56 @@ for _ev in (CAPTEUR if CAPTEUR_PRESENT else []):
         {"hooks": [commande("signaler_sessions.py", None, 10,
                             **({} if _ev == "SessionEnd" else {"async": True}))]})
 CLEANUP = 3650
+# Les scripts que la méthode branche, ou a branchés un jour (sonde_evenements.py, retiré le 08/11).
+# C'est à eux que l'installeur reconnaît SES automatismes dans settings.json, où que soit le
+# dossier : il ne remplace que ceux-là, et ne touche pas à ceux d'un autre outil (20/11/2026).
+SCRIPTS_METHODE = ("memoire_projet.py", "archiver_conversations.py", "signaler_sessions.py",
+                   "sonde_evenements.py")
+_SIEN = re.compile(r"/outils/hooks/(?:%s)(?![\w.-])" % "|".join(re.escape(s) for s in SCRIPTS_METHODE))
+
+
+def est_de_la_methode(automatisme):
+    """Vrai si la commande de cet automatisme lance un des scripts de la méthode."""
+    if not isinstance(automatisme, dict):
+        return False
+    args = automatisme.get("args")
+    morceaux = [automatisme.get("command")] + (args if isinstance(args, list) else [])
+    return any(_SIEN.search(re.sub(r"[\\/]+", "/", m)) for m in morceaux if isinstance(m, str))
+
+
+def partager(groupes):
+    """Les groupes d'un événement, séparés : (ceux de la méthode, ceux des autres outils)."""
+    siens, autres = [], []
+    for g in groupes if isinstance(groupes, list) else []:
+        contenu = g.get("hooks") if isinstance(g, dict) else None
+        if not isinstance(contenu, list):
+            autres.append(g)
+            continue
+        a_elle = [h for h in contenu if est_de_la_methode(h)]
+        pas_a_elle = [h for h in contenu if not est_de_la_methode(h)]
+        if a_elle:
+            siens.append(dict(g, hooks=a_elle))
+        if pas_a_elle or not a_elle:
+            autres.append(dict(g, hooks=pas_a_elle) if a_elle else g)
+    return siens, autres
+
+
+def automatismes_fusionnes(actuels):
+    """Ce qu'il faut écrire sous « hooks » : les automatismes de la méthode tels qu'elle les veut,
+    puis ceux des autres outils, inchangés. Rend aussi le nombre de ces derniers, et si ceux de
+    la méthode étaient déjà les bons : alors rien n'est à écrire, quel que soit leur ordre."""
+    actuels = actuels if isinstance(actuels, dict) else {}
+    fusion, gardes, a_jour = {}, 0, True
+    for ev in list(actuels) + [e for e in HOOKS_VOULUS if e not in actuels]:
+        siens, autres = partager(actuels.get(ev))
+        voulus = HOOKS_VOULUS.get(ev, [])
+        if siens != voulus:
+            a_jour = False
+        gardes += sum(len(g["hooks"]) if isinstance(g, dict) and isinstance(g.get("hooks"), list) else 1
+                      for g in autres)
+        if voulus or autres:
+            fusion[ev] = voulus + autres
+    return fusion, gardes, a_jour
 
 
 def arbre(dossier):
@@ -124,17 +179,27 @@ def main():
     except (OSError, ValueError):
         reglages = {}
     voulu = dict(reglages)
-    voulu["hooks"] = HOOKS_VOULUS
-    voulu["cleanupPeriodDays"] = CLEANUP
+    quoi = []  # ce qui diffère dans les réglages, dit avec les mots de l'utilisateur
+    automatismes, gardes, a_jour = automatismes_fusionnes(reglages.get("hooks"))
+    if not a_jour:
+        voulu["hooks"] = automatismes
+        quoi.append("automatismes de la méthode")
+    if reglages.get("cleanupPeriodDays") != CLEANUP:
+        voulu["cleanupPeriodDays"] = CLEANUP
+        quoi.append("conservation des conversations")
     env = dict(reglages.get("env") or {})
     env.update(ENV_VOULU)
-    voulu["env"] = env
-    if voulu != reglages:
-        ecarts.append("settings.json (hooks, cleanupPeriodDays ou env)")
+    if env != reglages.get("env"):
+        voulu["env"] = env
+        quoi.append("seuil du résumé d'absence")
+    if quoi:
+        ecarts.append("settings.json (" + ", ".join(quoi) + ")")
         if not verifier:
-            sauvegarde = chemin + ".avant-installation"
-            if os.path.exists(chemin) and not os.path.exists(sauvegarde):
-                shutil.copyfile(chemin, sauvegarde)
+            if os.path.exists(chemin):
+                premiere = chemin + ".avant-installation"
+                if not os.path.exists(premiere):
+                    shutil.copyfile(chemin, premiere)
+                shutil.copyfile(chemin, chemin + ".avant-derniere-installation")
             with open(chemin, "w", encoding="utf-8", newline="\n") as f:
                 json.dump(voulu, f, ensure_ascii=False, indent=2)
                 f.write("\n")
@@ -144,6 +209,8 @@ def main():
     print(("À installer : " if verifier else "Installé : ") + ", ".join(ecarts))
     if verifier:
         sys.exit(1)
+    if gardes and not a_jour:
+        print("Automatismes posés par d'autres outils, gardés tels quels : %d." % gardes)
     print("Les commandes et les automatismes s'appliquent aux nouvelles sessions : en ouvrir une pour les voir.")
 
 

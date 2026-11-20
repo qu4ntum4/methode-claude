@@ -30,7 +30,8 @@ sont dans [`gabarits/`](gabarits/).
   de consigner une décision, la consigne donnée au résumé automatique, l'archivage lisible des
   conversations —, la conservation des conversations portée à dix ans, et le seuil du résumé
   d'absence. Une copie `settings.json.avant-installation` est prise avant la première
-  modification ; vos autres réglages sont gardés.
+  modification, et une copie `settings.json.avant-derniere-installation` avant chaque suivante ;
+  vos autres réglages sont gardés, y compris les automatismes que d'autres outils y ont posés.
 - **`~/.claude/CLAUDE.md`** (vos instructions valables dans tous les projets) : posé depuis un
   gabarit **seulement si ce fichier n'existe pas encore**. S'il existe, il n'est pas touché.
 - **`Documents\Claude\archives-conversations\`** : l'archive lisible de vos conversations, créée
@@ -52,7 +53,7 @@ Installe sur ma machine la méthode de mémoire des projets publiée sur https:/
 1. Avant de toucher à quoi que ce soit, dis-moi ce qui va changer sur ma machine, puis attends mon accord :
    - un dossier Documents\Claude\methode-claude, dans mon profil Windows, qui recevra une copie du dépôt ;
    - le dossier des commandes de Claude Code, ~/.claude/skills/, qui recevra quatre commandes : /nouveau-projet, /reprendre, /tache et /checkpoint ;
-   - le fichier de réglages de Claude Code, ~/.claude/settings.json, qui recevra les automatismes de la méthode (une copie « settings.json.avant-installation » est prise avant, et mes autres réglages sont gardés) ;
+   - le fichier de réglages de Claude Code, ~/.claude/settings.json, qui recevra les automatismes de la méthode (une copie « settings.json.avant-installation » est prise avant, et mes autres réglages sont gardés, y compris les automatismes d'autres outils) ;
    - mes instructions générales, ~/.claude/CLAUDE.md, seulement si ce fichier n'existe pas encore ; s'il existe, il ne sera pas touché.
    Rien d'autre.
 
