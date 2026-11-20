@@ -7,15 +7,21 @@ argument-hint: "[tâche ou chantier, facultatif]"
 
 Reprendre le projet du dossier courant. Demande éventuelle de l'utilisateur : $ARGUMENTS
 
-Version du 11/11/2026.
+Version du 20/11/2026.
 
-1. **Qui suis-je.** Demander à l'application le titre de cette session et sa session parente :
-   `ToolSearch` « select:mcp__ccd_session_mgmt__get_session », puis `get_session` avec `self`.
-   Une session parente, ou un titre qui nomme un chantier porté à part : c'est une **session
-   annexe**. Son état n'est pas `ETAT.md` mais le bloc « Où en est la session » en tête de son
-   chantier (`docs/chantiers/<x>.md`, sur sa branche, dans sa copie de travail). Sans l'outil, ou
-   dans le doute, une question à cocher : les chantiers que « Des sessions » d'`ETAT.md` liste,
-   ou « la principale ».
+1. **Qui suis-je.** Demander à l'application le titre de cette session, sa session parente et
+   si elle en est détachée : `ToolSearch` « select:mcp__ccd_session_mgmt__get_session », puis
+   `get_session` avec `self` (`title`, `parentSessionId`, `detached`). Puis, dans cet ordre :
+   - `ETAT.md` nomme la session principale, en tête (« Session principale : … »), et c'est le
+     titre de cette session : c'est **la principale**, même si l'application lui connaît une
+     session parente — elle a pu être lancée depuis une autre session.
+   - Sinon, une session parente dont elle n'est **pas détachée** (`detached` absent ou faux), ou
+     un titre qui nomme un chantier porté à part : c'est une **session annexe**. Son état n'est
+     pas `ETAT.md` mais le bloc « Où en est la session » en tête de son chantier
+     (`docs/chantiers/<x>.md`, sur sa branche, dans sa copie de travail).
+   - Sinon, c'est la principale — sauf si `ETAT.md` en nomme une autre : alors c'est le doute.
+   Sans l'outil, ou dans le doute, une question à cocher : les chantiers que « Des sessions »
+   d'`ETAT.md` liste, ou « la principale ».
 2. **L'état.** `ETAT.md` a normalement été injecté au démarrage par l'automatisme : ne pas le
    relire s'il est déjà dans le contexte. Dans la copie de travail d'un outil (dépôt à plusieurs
    outils), c'est `docs/<outil>/ETAT.md` — l'en-tête du démarrage le nomme. Dans une session

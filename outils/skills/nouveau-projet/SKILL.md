@@ -20,8 +20,9 @@ Mettre en route le projet « $ARGUMENTS » (sans argument : le dossier courant).
    les gabarits là où rien n'existe, crée `docs/chantiers/`, `docs/archives/`, initialise git si
    besoin et écrit un `.gitignore` de départ.
 4. **Remplir les gabarits** avec les réponses — remplacer chaque « guillemet », retirer ce qui
-   ne s'applique pas : `CLAUDE.md` (sommaire, commandes, règles, limites), `ETAT.md` (objectif,
-   « Fini quand », une première action), `TODO.md`. Pas une ligne inventée : ce qu'on ne sait
+   ne s'applique pas : `CLAUDE.md` (sommaire, commandes, règles, limites), `ETAT.md` (le titre
+   de cette session en « Session principale », l'objectif, « Fini quand », une première
+   action), `TODO.md`. Pas une ligne inventée : ce qu'on ne sait
    pas reste une question dans `ETAT.md`, « Ce qui attend une réponse ».
 5. **S'il existe une conversation-fleuve sur ce projet**, le dire : elle doit faire un dernier
    point d'étape complet avant d'être close, et c'est l'utilisateur qui le lui demande.

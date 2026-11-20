@@ -163,9 +163,10 @@ Une fois le oui donné, l'agent enchaîne sans s'arrêter pour annoncer.
 
 ### `/reprendre` — en début de session, pour continuer
 
-1. **Qui suis-je** : la principale, ou une session annexe ? L'application le sait (le titre, la
-   session parente) ; sinon, l'utilisateur. Une session annexe a son état en tête de son
-   chantier, pas dans `ETAT.md`.
+1. **Qui suis-je** : la principale, ou une session annexe ? L'état nomme la principale par son
+   titre, et l'application dit le titre de la session, sa session parente et si elle en est
+   détachée ; sinon, l'utilisateur. Une session annexe a son état en tête de son chantier, pas
+   dans `ETAT.md`.
 2. L'état a été injecté au démarrage par l'automatisme : ne pas le relire. Dans une session
    annexe, lire le bloc « Où en est la session » de son chantier. Un état modifié et non commité
    est en cours d'écriture par une autre session : ne pas s'y fier pour choisir la tâche.
@@ -291,6 +292,11 @@ principale, qui l'attendait encore. Les règles qui en sont sorties :
   qui il est : le démarrage n'injecte que l'état du dossier, celui de la principale. Vu le
   04/11 : une session annexe relancée a repris la prochaine action de la principale, puis une
   étape que la principale avait résumée de travers.
+- **L'état nomme la session principale**, par son titre, en tête : c'est à ce titre que
+  `/reprendre` la reconnaît, et `/checkpoint` l'y remet. L'arbre des sessions de l'application
+  ne suffit pas : une principale lancée depuis une autre session y est une enfant, et le reste
+  même détachée. Vu le 20/11 : une principale se lisait comme une annexe, et ne savait qui elle
+  était que par sa consigne de départ.
 - **La ligne envoyée à la principale est complète** (chantier, commit, prochaine action) et se
   colle telle quelle sous « Des sessions » de l'état, au point d'étape de la principale — pas en
   pleine tâche, une autre session peut relire l'état à cet instant.

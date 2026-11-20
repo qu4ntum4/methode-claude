@@ -3,6 +3,7 @@
 > **Ce fichier se réécrit, il ne s'allonge pas.** Il dit où on en est *maintenant*, en moins de
 > 60 lignes. On le remplace à chaque point d'étape (`/checkpoint`). L'histoire est dans les
 > commits, les arbitrages dans `docs/decisions.md`.
+> Session principale : « le titre de la session qui tient ce fichier », seule à le réécrire.
 
 ## L'objectif en cours
 

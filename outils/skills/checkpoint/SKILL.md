@@ -4,7 +4,7 @@ description: Point d'étape — vérifier, consigner décisions et documentation
 ---
 
 Point d'étape sur le projet du dossier courant. Le `CLAUDE.md` du projet peut compléter cette
-liste (section « Point d'étape ») : ses ajouts s'appliquent en plus. Version du 11/11/2026.
+liste (section « Point d'étape ») : ses ajouts s'appliquent en plus. Version du 20/11/2026.
 
 **Qui le lance** : l'utilisateur ; ou Claude, après l'avoir proposé et reçu un oui explicite —
 jamais de lui-même, et jamais de copie à la main à la place de la commande. Avant de proposer
@@ -45,6 +45,10 @@ l'autre.
    quand : … »**, où on en est, **une seule** prochaine action, ce qui attend une réponse (et de
    qui), ce qu'il ne faut pas oublier. **Compter les lignes (`wc -l ETAT.md`) avant le commit**,
    pas après : moins de 60, sinon ranger encore. Date et heure vérifiées par une commande.
+   En tête, la ligne **« Session principale »** porte le titre de la session qui réécrit le
+   fichier, relevé auprès de l'application (`get_session` avec `self`), jamais recopié de
+   l'ancien état : c'est à ce titre que `/reprendre` reconnaît la principale. La poser si elle
+   manque (états d'avant le 20/11).
    Aucun nom de personne si le fichier est versionné.
 7. **Le reste à faire.** Retirer des chantiers ce qui est fait ; ajouter ce que l'utilisateur a
    validé, **avec sa priorité** (`[P1]`-`[P3]` en tête de tâche, obligatoire dans `divers.md`) ;
