@@ -55,7 +55,10 @@ l'autre.
    celui du dossier ; ou garder le titre actuel). Sur un oui, renommer (`ToolSearch`
    « select:mcp__ccd_session_mgmt__set_session_title », puis `set_session_title` avec `self`)
    et écrire le nouveau titre dans la ligne ; sans l'outil, demander à l'utilisateur de la
-   renommer lui-même. Une session annexe ne se renomme pas ainsi.
+   renommer lui-même. S'il garde son titre, la ligne le dit : « titre » (titre gardé). Tant que
+   l'ancien état porte cette marque pour ce même titre, ne pas reposer la question : reconduire
+   la marque ; l'utilisateur l'efface pour que le renommage soit reproposé. Une session annexe
+   ne se renomme pas ainsi.
    Aucun nom de personne si le fichier est versionné.
 7. **Le reste à faire.** Retirer des chantiers ce qui est fait ; ajouter ce que l'utilisateur a
    validé, **avec sa priorité** (`[P1]`-`[P3]` en tête de tâche, obligatoire dans `divers.md`) ;

@@ -301,8 +301,9 @@ principale, qui l'attendait encore. Les règles qui en sont sorties :
   fixe en tête, puis le nom court du projet ; la forme est dans les règles globales. C'est pour
   l'œil de l'utilisateur, qui la retrouve d'un regard parmi vingt sessions ; l'agent, lui, ne
   s'y fie pas et lit la ligne de l'état. `/nouveau-projet` pose ce titre, `/checkpoint` propose
-  le renommage quand il manque, et l'état reçoit le nouveau titre dans le même passage. Vu le
-  20/11 : cinq sessions principales, deux formes de titre, et des projets sans aucune.
+  le renommage quand il manque, et l'état reçoit le nouveau titre dans le même passage ; un
+  refus se retient par une marque dans la ligne, « (titre gardé) », et la question ne revient
+  pas. Vu le 20/11 : cinq sessions principales, deux formes de titre, et des projets sans aucune.
 - **La ligne envoyée à la principale est complète** (chantier, commit, prochaine action) et se
   colle telle quelle sous « Des sessions » de l'état, au point d'étape de la principale — pas en
   pleine tâche, une autre session peut relire l'état à cet instant.
